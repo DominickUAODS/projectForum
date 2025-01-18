@@ -1,0 +1,57 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex; /* Устанавливаем flex-контейнер для body */
+    flex-direction: column; /* Располагаем элементы вертикально */
+}
+
+.page-content {
+    flex: 1; /* Заставляем .page-content занимать оставшееся пространство */
+    display: flex;
+    flex-direction: column;
+}
+
+.myfooter {
+    margin-top: auto; /* Смещаем footer к низу страницы */
+    background-color: #f8f9fa; 
+    padding: 10px 0; /* Опционально добавляем отступы */
+}
+
+
+.navbar{
+    font-family: "Source Code Pro", serif;
+}
+
+.main-img{
+    width:70px;
+    height: auto;
+}
+
+.name-forum-cont{
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    font-size: 25px;
+    font-weight: bolder;
+    color:rgba(61, 132, 159, 0.8);
+    text-shadow: 2px 2px 4px rgba(34, 92, 115, 0.8);
+}
+
+.sign-in-btn, .sign-up-btn{
+    background-color:rgba(61, 132, 159, 0.8) ;
+    border-radius: 20px;
+    font-weight: bolder;
+    margin-left: 15px;
+    margin-right: 15px;
+
+}
+
+.sign-in-btn a
+{
+    color: white !important;
+}
+
+.sign-up-btn a{
+    color: rgba(215, 232, 239, 0.8) !important;
+}
+
