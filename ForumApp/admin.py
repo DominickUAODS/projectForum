@@ -6,9 +6,9 @@ from .models import *
 class CustomUserAdmin(UserAdmin):
     fieldsets = (
         *UserAdmin.fieldsets,
-        (None, {"fields":('birthDate',)}),)
+        (None, {"fields":('date_of_bitrh', 'user_image')}),)
     add_fieldsets=(
         *UserAdmin.add_fieldsets,
-        (None,{"fields":('birthDate',)},)
+        (None,{"fields":('date_of_bitrh', 'user_image')},)
     )
 
