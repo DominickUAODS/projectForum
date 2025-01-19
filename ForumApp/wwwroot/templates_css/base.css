@@ -1,20 +1,20 @@
 html, body {
     height: 100%;
     margin: 0;
-    display: flex; /* Устанавливаем flex-контейнер для body */
-    flex-direction: column; /* Располагаем элементы вертикально */
+    display: flex; 
+    flex-direction: column; 
 }
 
 .page-content {
-    flex: 1; /* Заставляем .page-content занимать оставшееся пространство */
+    flex: 1; 
     display: flex;
     flex-direction: column;
 }
 
 .myfooter {
-    margin-top: auto; /* Смещаем footer к низу страницы */
+    margin-top: auto; 
     background-color: #f8f9fa; 
-    padding: 10px 0; /* Опционально добавляем отступы */
+    padding: 10px 0; 
 }
 
 
@@ -46,6 +46,12 @@ html, body {
 
 }
 
+.sign-up-btn:hover {
+	background: rgb(23, 63, 116);
+}
+.sign-in-btn:hover{
+    background: rgb(23, 63, 116);
+}
 .sign-in-btn a
 {
     color: white !important;

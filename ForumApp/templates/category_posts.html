@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class = "category-title">
+    <p>{{ category.title }}</p>
+</div>
+<div class="post-list">
+    <a class="plus-post">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-file-plus" viewBox="0 0 16 16">
+            <path d="M8.5 6a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V10a.5.5 0 0 0 1 0V8.5H10a.5.5 0 0 0 0-1H8.5z"/>
+            <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1"/>
+          </svg>
+    </a>
+    {% for post in posts %}
+        <a class="post">
+            <div class="post-author">
+                {% if post.author_picture %}
+                    <img src="{{ post.author_picture }}" alt="{{ post.author.username }}" class="author-img">
+                {% else %}
+                    <div class="author-img-placeholder"></div>
+                {% endif %}
+                <span class="author-name">{{ post.author.username }}</span>
+            </div>
+            <p class = "post-content">{{ post.content }}</p>
+            <p class="likes"><strong>Likes:</strong> {{ post.likes }}</p>
+            <p class="posted-on"><em>Posted on {{ post.created_at }}</em></p>
+        </a>
+    {% empty %}
+        <p>No posts available.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}
