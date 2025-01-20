@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block singup %}
+<div class="container d-flex justify-content-center">
+    <div class="row">
+        <form method="post" action="">
+            <h1>SingUp Page</h1>
+            {% csrf_token %}
+            
+            <div class="mb-3">
+                <label for="username">Username</label>
+                <div class="">{{ form.username }}</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="first_name">First name</label>
+                <div class="">{{ form.first_name }}</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="last_name">Last name</label>
+                <div class="">{{ form.last_name }}</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="date_of_bitrh">Date of birth</label>
+                <div class="">{{ form.date_of_bitrh }}</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="password1">Password</label>
+                <div class="">{{ form.password1 }}</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="password2">Password confirmation</label>
+                <div class="">{{ form.password2 }}</div>
+            </div>
+            
+            <button class="btn btn-primary" type="submit">SingUp</button>
+            <a href="{% url 'login' %}">Have account? Log In</a>
+        </form>
+    </div>
+</div>
+
+{% endblock singup %}

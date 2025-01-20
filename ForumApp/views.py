@@ -1,7 +1,12 @@
-from django.shortcuts import get_object_or_404, render
-from .models import Category, Post, CustomUser
+from django.shortcuts import get_object_or_404, render, redirect
+from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.hashers import make_password
- 
+from django.contrib.auth.decorators import login_required
+from django.http import HttpRequest, HttpResponse
+from django.conf import settings
+from .models import *
+from .forms import *
+
 def base(request):
     return render(request, "base.html")
 
@@ -27,7 +32,7 @@ def index(request):
 #add posts to category 1
 
 # category = Category.objects.get(id=1)
-user = CustomUser.objects.get(id=1)
+# user = CustomUser.objects.get(id=1)
 # Post.objects.create(
 #     category=category,
 #     author=user,
@@ -266,3 +271,62 @@ def category_posts(request, category_id):
         post.author_picture = post.author.user_image.url if post.author.user_image else None
 
     return render(request, 'category_posts.html', {'category': category, 'posts': posts})
+
+################### LOGIN, REGISTER(SingUp), LOGOUT, USER PROFILE ###################
+
+def login_user(request:HttpRequest):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password'])
+            if user:
+                login(request, user)
+                return redirect('Start page')
+    else:
+        form = LoginForm()
+    return render(request, 'login.html', {'form': form})
+
+def register_user(request:HttpRequest) -> HttpResponse:
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+            return redirect('/', permanent=True)
+        else:
+            return render(request, "signup.html", context={"form": form})
+    else:
+        return render(request, "signup.html", context={"form":SignUpForm()})
+    
+def logout_user(request:HttpRequest):
+    if request.user.is_authenticated:
+        print(request.user.is_authenticated)
+        logout(request)
+        return redirect('/', permanent=True)
+
+@login_required()
+def user_profile_details(request:HttpRequest, user_id): 
+    user = CustomUser.objects.get(id=user_id)
+    form = UserProfileForm(instance=user)
+    return render(request, "user_profile_details.html", context={"form": form})
+
+@login_required()
+def user_profile_edit(request:HttpRequest, user_id):
+    user = CustomUser.objects.get(id=user_id)
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES, instance=user)
+        print(form)
+        if form.is_valid():
+            if form.cleaned_data.get('password'):
+                user.password = make_password(form.cleaned_data['password'])
+            image = form.cleaned_data['user_image']
+            image_name = image.name
+            user.user_image = settings.MEDIA_URL + image_name
+            form.save()
+            print("test")
+            return redirect('user_profile_details', user_id=user.id)
+        else:
+            print("test 2")
+            return render(request, "user_profile_edit.html", context={"form": form})
+    else:
+        form = UserProfileForm(instance=user)
+        return render(request, "user_profile_edit.html", context={"form": form})

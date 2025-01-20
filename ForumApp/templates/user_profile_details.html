@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container d-flex justify-content-center m-auto">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-md-4">
+            {% if form.instance.user_image %}
+            <img src="{{ form.instance.user_image.url }}" alt="User Image" class="img-fluid rounded" width="350">
+            {% endif %}
+        </div>
+        <div class="col-md-8">
+            <h1>User Profile Page</h1>
+            <form method='post' >
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label for="username">Username : </label>
+                    {{ form.instance.username }}
+                </div>
+
+                <div class="mb-3">
+                    <label for="first_name">First name :</label>
+                    {{ form.instance.first_name }}
+                </div>
+
+                <div class="mb-3">
+                    <label for="last_name">Last name :</label>
+                    {{ form.instance.last_name }}
+                </div>
+
+                <div class="mb-3">
+                    <label for="date_of_bitrh">Date of birth :</label>
+                    {{ form.instance.date_of_bitrh }}
+                </div>
+
+                <div class="row-inline">
+                    <a class="btn btn-primary" href="{% url 'Start page' %}" role="button">Back to main</a>
+                    <a class="btn btn-primary" href="{% url 'user_profile_edit' user.id %}" role="button">Edit Profile</a>
+                </div>
+        </div>
+        </form>
+
+    </div>
+</div>
+{% endblock content %}
