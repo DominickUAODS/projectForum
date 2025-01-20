@@ -23,9 +23,10 @@ from django.urls import re_path
 from django.views.static import serve
 
 urlpatterns = [
-    path('', views.index),
+    path('', views.index, name = 'home'),
     path('category/<int:category_id>/posts/', views.category_posts, name='category_posts'),
-    
+    path('posts/<int:post_id>/full/', views.full_post,name='full_post'),
+    path('post/<int:post_id>/add_comment/', views.add_comment, name='add_comment'), 
 ]
 
 if settings.DEBUG:
