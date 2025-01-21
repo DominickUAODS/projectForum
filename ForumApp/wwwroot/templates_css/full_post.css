@@ -1,0 +1,63 @@
+body {
+    line-height: 1.6;
+    margin: 20px;
+}
+.post-container {
+    margin-bottom: 40px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+.post-header {
+    margin-bottom: 20px;
+}
+.post-author {
+    font-weight: bold;
+    color: #333;
+}
+.post-content {
+    margin-bottom: 10px;
+}
+.post-likes {
+    font-size: 14px;
+    color: #666;
+}
+.comments-section {
+    margin-top: 40px;
+}
+.comment {
+    border-top: 1px solid #ddd;
+    padding: 10px 0;
+}
+.comment-author {
+    font-weight: bold;
+    color: #555;
+}
+.comment-content {
+    margin: 5px 0;
+}
+.comment-likes {
+    font-size: 12px;
+    color: #888;
+}
+.new-comment-form textarea {
+    width: 100%;
+    min-height: 80px;
+    margin-top: 10px;
+}
+.new-comment-form button {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.new-comment-form button:hover {
+    background-color: #0056b3;
+}
+.author-name{
+    color: black !important;
+}

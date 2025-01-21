@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="post-container">
+    <div class="post-header">
+        <h2>{{ post.category.title }}</h2>
+        <div class="post-author">
+            {% if post.author_picture %}
+                <img src="{{ post.author_picture }}" alt="{{ post.author.username }}" class="author-img">
+            {% else %}
+                <div class="author-img-placeholder"></div>
+            {% endif %}
+            <span class="author-name">{{ post.author.username }}</span>
+        </div>
+        <p><small>Дата создания: {{ post.created_at|date:"d.m.Y H:i" }}</small></p>
+    </div>
+    <div class="post-content">
+        <p>{{ post.content }}</p>
+    </div>
+    <div class="post-likes">
+        ❤ {{ post.likes }} лайков
+    </div>
+</div>
+
+<div class="comments-section">
+    <h3>Комментарии:</h3>
+
+    {% for comment in post.comments.all %}
+    <div class="comment">
+        <p><span class="comment-author">{{ comment.author.username }}</span>:</p>
+        <p class="comment-content">{{ comment.content }}</p>
+        <p class="comment-likes">❤ {{ comment.likes }} лайков</p>
+        <p><small>Дата создания: {{ comment.created_at|date:"d.m.Y H:i" }}</small></p>
+    </div>
+    {% empty %}
+    <p>Комментариев пока нет. Будьте первым!</p>
+    {% endfor %}
+</div>
+
+<div class="new-comment-form">
+    <h4>Оставить комментарий:</h4>
+    <form method="POST" action="{% url 'add_comment' post.id %}">
+        {% csrf_token %}
+        <textarea name="content" placeholder="Ваш комментарий..." required></textarea>
+        <button type="submit">Добавить комментарий</button>
+    </form>
+</div> 
+
+{% endblock content %}

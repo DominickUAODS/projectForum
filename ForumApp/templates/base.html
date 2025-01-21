@@ -9,8 +9,10 @@
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="{% static 'templates_css/base.css' %}">
     <link rel="stylesheet" href="{% static 'templates_css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'templates_css/full_post.css' %}">
     <link rel="stylesheet" href="{% static 'templates_css/category_posts.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,6 +28,7 @@
                 <div class="name-forum-cont">
                     <p class="name-forum">ConvoCore</p>
                 </div>
+                    <a  style="border:1px solid rgba(61, 132, 159, 0.8); border-radius: 10px; margin-top:9px; font-weight: bold; text-decoration: none; color: rgba(61, 132, 159, 0.8); "class = "a-cat" href="{% url 'home' %}">Categories</a>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav ms-auto">
                         {% if request.user.is_authenticated %}
