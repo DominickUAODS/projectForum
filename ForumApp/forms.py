@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import CustomUser
+from .models import *
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 
@@ -40,3 +40,12 @@ class UserProfileForm(forms.ModelForm):
                 self.add_error("password", e.messages[0])
 
         return cleaned_data
+    
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['category', 'content']
+        widgets = {
+            'content': forms.Textarea(attrs={'placeholder': 'Write your post here...', 'class': 'form-control'}),
+            'category': forms.Select(attrs={'class': 'form-control'}),
+        }

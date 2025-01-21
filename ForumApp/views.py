@@ -280,6 +280,21 @@ def full_post(request,post_id):
     return render(request, 'full_post.html', {'post': post})
 
 @login_required
+def add_post(request, category_id):
+    category = get_object_or_404(Category, id=category_id)
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.category = category
+            post.save()
+            return redirect('category_posts', category_id=category.id)
+    else:
+        form = PostForm(initial={'category': category})
+    return render(request, 'add_post.html', {'form': form, 'category': category})
+
+@login_required
 def add_comment(request, post_id):
     post = get_object_or_404(Post, id=post_id)  
     
@@ -288,7 +303,7 @@ def add_comment(request, post_id):
         if content:  
             comment = Comment(post=post, author=request.user, content=content)
             comment.save()
-            return redirect('post_detail', post_id=post.id)  
+            return redirect('full_post', post_id=post.id)
     return HttpResponse("Ошибка при добавлении комментария", status=400)
 
 ################### LOGIN, REGISTER(SingUp), LOGOUT, USER PROFILE ###################

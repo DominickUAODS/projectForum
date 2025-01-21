@@ -31,7 +31,8 @@ urlpatterns = [
     path('user/<int:user_id>', views.user_profile_details, name='user_profile_details'),
     path('edit-user/<int:user_id>', views.user_profile_edit, name='user_profile_edit'),
     path('posts/<int:post_id>/full/', views.full_post,name='full_post'),
-    path('post/<int:post_id>/add_comment/', views.add_comment, name='add_comment'), 
+    path('post/<int:post_id>/add_comment/', views.add_comment, name='add_comment'),
+    path('category/<int:category_id>/add-post/', views.add_post, name='add_post'),
     
 ]
 
