@@ -2,8 +2,10 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.password_validation import validate_password
 from django.http import HttpRequest, HttpResponse
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from .models import *
 from .forms import *
 
@@ -314,18 +316,21 @@ def user_profile_edit(request:HttpRequest, user_id):
     user = CustomUser.objects.get(id=user_id)
     if request.method == 'POST':
         form = UserProfileForm(request.POST, request.FILES, instance=user)
-        print(form)
         if form.is_valid():
-            if form.cleaned_data.get('password'):
-                user.password = make_password(form.cleaned_data['password'])
+            password = form.cleaned_data.get('password')
+            if password:
+                user.set_password(password)
+                logout(request)
+                user.save()
+                return redirect('login')
+            user.save()    
             image = form.cleaned_data['user_image']
-            image_name = image.name
-            user.user_image = settings.MEDIA_URL + image_name
-            form.save()
-            print("test")
+            if image:
+                user.user_image = settings.MEDIA_URL + image.name
+                user.save()
+            
             return redirect('user_profile_details', user_id=user.id)
         else:
-            print("test 2")
             return render(request, "user_profile_edit.html", context={"form": form})
     else:
         form = UserProfileForm(instance=user)

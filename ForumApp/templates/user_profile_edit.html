@@ -34,12 +34,12 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="password1">Password :</label>
+                    <label for="password">Password :</label>
                     {{ form.password }}
                 </div>
 
                 <div class="mb-3">
-                    <label for="password">Password confirmation :</label>
+                    <label for="password2">Password confirmation :</label>
                     {{ form.password }}
                 </div>
 
@@ -53,6 +53,7 @@
                     <button class="btn btn-primary" type="submit">Save Profile</button>
                 </div>
                 <hr>
+                {{fields.errors}}
                 <!-- {{form.as_p}} -->
             </form>
         </div>
