@@ -1,6 +1,8 @@
-from django.shortcuts import get_object_or_404, render
-from .models import Category, Post, CustomUser
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, redirect, render
+from .models import Category, Post, CustomUser, Comment
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.decorators import login_required
  
 def base(request):
     return render(request, "base.html")
@@ -266,3 +268,21 @@ def category_posts(request, category_id):
         post.author_picture = post.author.user_image.url if post.author.user_image else None
 
     return render(request, 'category_posts.html', {'category': category, 'posts': posts})
+
+
+def full_post(request,post_id):
+    post = get_object_or_404(Post,id=post_id)
+    post.author_picture = post.author.user_image.url if post.author.user_image else None
+    return render(request, 'full_post.html', {'post': post})
+
+@login_required
+def add_comment(request, post_id):
+    post = get_object_or_404(Post, id=post_id)  
+    
+    if request.method == 'POST':  
+        content = request.POST.get('content')  
+        if content:  
+            comment = Comment(post=post, author=request.user, content=content)
+            comment.save()
+            return redirect('post_detail', post_id=post.id)  
+    return HttpResponse("Ошибка при добавлении комментария", status=400)

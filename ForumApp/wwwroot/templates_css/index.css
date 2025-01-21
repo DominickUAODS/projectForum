@@ -3,7 +3,7 @@
     flex-direction: row;
     flex-wrap: wrap; 
     gap: 20px;
-    padding: 40px;
+    padding: 20px;
     justify-content: center;
     max-width: 1200px;
     margin: 0 auto;
@@ -61,4 +61,28 @@
 .plus-category:hover{
     animation: bounce 1s;
     background-color: rgb(23, 63, 116); 
+}
+
+
+@media (max-width: 528px) {
+    .category-cards {
+        flex-direction: column; 
+        gap: 10px; 
+        padding: 10px; 
+    }
+
+    .category-card, .plus-category {
+        width: 100%; 
+        padding: 15px; 
+        font-size: 16px; 
+    }
+
+    .category-card p {
+        font-size: 14px; 
+    }
+
+    .plus-category svg {
+        width: 80%; 
+        height: auto;
+    }
 }
