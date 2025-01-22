@@ -25,6 +25,10 @@ body {
 }
 .comments-section {
     margin-top: 40px;
+    background-color:   rgba(61, 132, 159, 0.8);
+    color: white;
+    border-radius: 20px;
+    padding-left: 10px;
 }
 .comment {
     border-top: 1px solid #ddd;
@@ -60,4 +64,10 @@ body {
 }
 .author-name{
     color: black !important;
+}
+
+.full-post{
+    display: flex;
+    flex-direction: column;
+    margin: 5%;
 }

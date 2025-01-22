@@ -3,7 +3,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.password_validation import validate_password
-from django.http import HttpRequest, HttpResponse, HttpResponseForbidden
+from django.http import HttpRequest, HttpResponse, HttpResponseForbidden, JsonResponse
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from .models import *
@@ -20,6 +20,18 @@ def base(request):
 #     last_name="Kosov",
 #     date_of_bitrh="1990-05-12", 
 #     user_image="user_image/pavel-kosov.jpg"  
+# )
+
+# print(f"CustomUser {custom_user.username} created successfully!")
+
+
+# custom_user = CustomUser.objects.create(
+#     username="elenasometh",
+#     password=make_password("000"),  
+#     first_name="Elena",
+#     last_name="Lena",
+#     date_of_bitrh="1990-05-12", 
+#     user_image="user_image/jake-nackos.jpg "  
 # )
 
 # print(f"CustomUser {custom_user.username} created successfully!")
@@ -409,3 +421,39 @@ def user_profile_edit(request:HttpRequest, user_id):
     else:
         form = UserProfileForm(instance=user)
         return render(request, "user_profile_edit.html", context={"form": form})
+
+
+@login_required
+def like_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    like, created = PostLike.objects.get_or_create(user=request.user, post=post)
+    
+    if not created:
+        like.delete()
+        post.likes -= 1
+        post.save()
+        liked = False
+    else:
+        post.likes += 1
+        post.save()
+        liked = True
+    post.save()
+
+    return JsonResponse({'liked': liked, 'likes_count': post.likes})
+
+@login_required
+def like_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    like, created = CommentLike.objects.get_or_create(user=request.user, comment=comment)
+    
+    if not created:
+        like.delete()
+        comment.likes -= 1
+        comment.save()
+        liked = False
+    else:
+        comment.likes += 1
+        comment.save()
+        liked = True
+    comment.save()
+    return JsonResponse({'liked': liked, 'likes_count': comment.likes})

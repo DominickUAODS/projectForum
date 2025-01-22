@@ -71,5 +71,43 @@
     </div>
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
 
+        document.querySelectorAll('.like-post').forEach(button => {
+            button.addEventListener('click', () => {
+                const postId = button.getAttribute('data-post-id');
+                fetch(`/like_post/${postId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('post-likes-count').textContent = data.likes_count;
+                });
+            });
+        });
+
+
+        document.querySelectorAll('.like-comment').forEach(button => {
+            button.addEventListener('click', () => {
+                const commentId = button.getAttribute('data-comment-id');
+                fetch(`/like_comment/${commentId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById(`comment-${commentId}-likes-count`).textContent = data.likes_count;
+                });
+            });
+        });
+    });
+</script>
 </html>
