@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import CustomUser
+from .models import *
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 
@@ -40,3 +40,30 @@ class UserProfileForm(forms.ModelForm):
                 self.add_error("password", e.messages[0])
 
         return cleaned_data
+    
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['category', 'content']
+        widgets = {
+            'content': forms.Textarea(attrs={'placeholder': 'Write your post here...', 'class': 'form-control'}),
+            'category': forms.Select(attrs={'class': 'form-control', 'disabled': 'disabled'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(PostForm, self).__init__(*args, **kwargs)
+        self.fields['category'].required = False
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ('title', 'description', 'category_image', )
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'placeholder': 'Write your description here...', 'class': 'form-control'}),
+            'category_image': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            }
+        
+    # def __init__(self, *args, **kwargs):
+    #     super(CategoryForm, self).__init__(*args, **kwargs)
+    #     self.fields['category_image'].required = False

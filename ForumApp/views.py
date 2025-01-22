@@ -3,7 +3,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.password_validation import validate_password
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, HttpResponseForbidden
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from .models import *
@@ -265,6 +265,7 @@ def index(request):
 #     likes=0
 # )
 
+################### CATEGORY, POSTS ###################
 
 def category_posts(request, category_id):
     category = get_object_or_404(Category, id=category_id)
@@ -280,6 +281,53 @@ def full_post(request,post_id):
     return render(request, 'full_post.html', {'post': post})
 
 @login_required
+def add_category(request):
+    if request.method == 'POST':
+        form = CategoryForm(request.POST, request.FILES)
+        if form.is_valid():
+            category = form.save(commit=False)
+            category.title = form.cleaned_data['title']
+            category.description = form.cleaned_data['description']
+            category.created_by = request.user
+            image = form.cleaned_data['category_image']
+            print(image)
+            print(settings.MEDIA_URL)
+            if image:
+                category.category_image = settings.MEDIA_URL + image.name
+            category.save()
+            return redirect('Start page')
+    else:
+        form = CategoryForm()
+    return render(request, 'add_category.html', {'form': form})
+
+@login_required
+def add_post(request, category_id):
+    category = get_object_or_404(Category, id=category_id)
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.category = category
+            post.save()
+            return redirect('category_posts', category_id=category.id)
+    else:
+        form = PostForm(initial={'category': category})
+    return render(request, 'add_post.html', {'form': form, 'category': category})
+
+@login_required
+def delete_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    if post.author != request.user and not request.user.is_staff:
+        return HttpResponseForbidden("Вы не можете удалить этот пост.")
+
+    if request.method == "POST":
+        post.delete()
+        return redirect('category_posts', category_id=post.category.id)
+
+    return render(request, 'delete_post.html', {'post': post})
+
+@login_required
 def add_comment(request, post_id):
     post = get_object_or_404(Post, id=post_id)  
     
@@ -288,8 +336,17 @@ def add_comment(request, post_id):
         if content:  
             comment = Comment(post=post, author=request.user, content=content)
             comment.save()
-            return redirect('post_detail', post_id=post.id)  
+            return redirect('full_post', post_id=post.id)
     return HttpResponse("Ошибка при добавлении комментария", status=400)
+
+@login_required
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id, author=request.user)
+    post_id = comment.post.id
+    if request.method == 'POST':
+        comment.delete()
+        return redirect('post_detail', post_id=post_id)
+    return render(request, 'delete_comment.html', {'comment': comment})
 
 ################### LOGIN, REGISTER(SingUp), LOGOUT, USER PROFILE ###################
 

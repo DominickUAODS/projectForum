@@ -144,3 +144,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'ForumApp', 'wwwroot', 'img')  # Actual fold
 
 #настройка для папки с изображениями пользователей
 USER_IMAGE_ROOT = os.path.join(MEDIA_ROOT, 'user_image')
+CATEGORY_IMAGE_ROOT = os.path.join(MEDIA_ROOT, 'category_image')
