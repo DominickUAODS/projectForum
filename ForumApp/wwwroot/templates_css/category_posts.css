@@ -84,6 +84,10 @@
     font-weight: 1000;
 }
 
+.new-comment-form, .sign-in-comment{
+    padding-left: 20px;
+}
+
 
 
 @keyframes bounce {

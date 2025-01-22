@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 
 class CustomUser(AbstractUser):
@@ -36,3 +37,20 @@ class Comment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     class Meta:
         db_table = "Comment"
+
+
+class PostLike(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_likes')
+    post = models.ForeignKey('Post', on_delete=models.CASCADE, related_name='post_likes')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'post')
+
+class CommentLike(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='comment_likes')
+    comment = models.ForeignKey('Comment', on_delete=models.CASCADE, related_name='comment_likes')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'comment')

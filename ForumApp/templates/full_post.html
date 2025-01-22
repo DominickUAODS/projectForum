@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class="full-post">
 <div class="post-container">
     <div class="post-header">
         <h2>{{ post.category.title }}</h2>
@@ -12,50 +13,58 @@
             {% endif %}
             <span class="author-name">{{ post.author.username }}</span>
         </div>
-        <p><small>Дата создания: {{ post.created_at|date:"d.m.Y H:i" }}</small></p>
+        <p><small>Posted on: {{ post.created_at|date:"d.m.Y H:i" }}</small></p>
     </div>
     <div class="post-content">
         <p>{{ post.content }}</p>
     </div>
     <div class="post-likes">
-        ❤ {{ post.likes }} лайков
+        <button class="like-post" data-post-id="{{ post.id }}">
+            ❤ <span id="post-likes-count">{{ post.likes }}</span>
+        </button>
     </div>
 </div>
 
 <div class="comments-section">
-    <h3>Комментарии:</h3>
+    <h3>Comments:</h3>
 
     {% for comment in post.comments.all %}
     <div class="comment">
         <p><span class="comment-author">{{ comment.author.username }}</span>:</p>
         <p class="comment-content">{{ comment.content }}</p>
-        <p class="comment-likes">❤ {{ comment.likes }} лайков</p>
-        <p><small>Дата создания: {{ comment.created_at|date:"d.m.Y H:i" }}</small></p>
+        <div class="comment-likes">
+            <button class="like-comment" data-comment-id="{{ comment.id }}">
+                ❤ <span id="comment-{{ comment.id }}-likes-count">{{ comment.likes }}</span>
+            </button>
+        </div>
+        <p><small>Created on: {{ comment.created_at|date:"d.m.Y H:i" }}</small></p>
 
         {% if comment.author == request.user or request.user.is_staff %}
             <form method="POST" action="{% url 'delete_comment' comment.id %}">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-danger">Удалить</button>
+                <button type="submit" class="btn btn-danger">Delete</button>
             </form>
         {% endif %}
 
     </div>
     {% empty %}
-        <p>Комментариев пока нет. Будьте первым!</p>
+        <p>No cooments yet. Will be the first!</p>
     {% endfor %}
 </div>
 
 {% if user.is_authenticated %}
     <div class="new-comment-form">
-        <h4>Оставить комментарий:</h4>
+        <h4>Add comment:</h4>
         <form method="POST" action="{% url 'add_comment' post.id %}">
             {% csrf_token %}
-            <textarea name="content" placeholder="Ваш комментарий..." required></textarea>
-            <button type="submit">Добавить комментарий</button>
+            <textarea name="content" placeholder="Your comment..." required></textarea>
+            <button type="submit">Add comment</button>
         </form>
     </div>
 {% else %}
-    <p><a href="{% url 'login' %}">Войдите</a>, чтобы оставить комментарий.</p>
+    <p class="sign-in-comment"><a  href="{% url 'login' %}">Sign in</a> to add comment.</p>
 {% endif %}
-
+</div>
 {% endblock content %}
+
+
