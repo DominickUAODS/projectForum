@@ -289,11 +289,11 @@ def add_category(request):
             category.title = form.cleaned_data['title']
             category.description = form.cleaned_data['description']
             category.created_by = request.user
-            image = form.cleaned_data['category_image']
-            print(image)
-            print(settings.MEDIA_URL)
-            if image:
-                category.category_image = settings.MEDIA_URL + image.name
+            # image = form.cleaned_data['category_image']
+            # print(image)
+            # print(settings.MEDIA_URL)
+            # if image:
+            #     category.category_image = settings.MEDIA_URL + image.name
             category.save()
             return redirect('Start page')
     else:
