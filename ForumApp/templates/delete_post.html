@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Удалить пост</h2>
+<p>Вы уверены, что хотите удалить этот пост и все его комментарии?</p>
+<p><strong>Пост:</strong> {{ post.content }}</p>
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Удалить</button>
+    <a href="{% url 'category_posts' post.category.id %}" class="btn btn-secondary">Отмена</a>
+</form>
+{% endblock %}

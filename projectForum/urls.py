@@ -24,16 +24,22 @@ from django.views.static import serve
 
 urlpatterns = [
     path('', views.index, name='Start page'),
+    ####################
     path('signup/', views.register_user, name='signup'),
     path('category/<int:category_id>/posts/', views.category_posts, name='category_posts'),
     path('account/', include("django.contrib.auth.urls")),
     path('logout/', views.logout_user, name='logout'),
+    path('add/', views.add_category, name='add_category'),
+    ####################
     path('user/<int:user_id>', views.user_profile_details, name='user_profile_details'),
     path('edit-user/<int:user_id>', views.user_profile_edit, name='user_profile_edit'),
     path('posts/<int:post_id>/full/', views.full_post,name='full_post'),
-    path('post/<int:post_id>/add_comment/', views.add_comment, name='add_comment'),
+    ####################
     path('category/<int:category_id>/add-post/', views.add_post, name='add_post'),
-    
+    path('post/<int:post_id>/delete/', views.delete_post, name='delete_post'),
+    path('post/<int:post_id>/add_comment/', views.add_comment, name='add_comment'),
+    path('comment/<int:comment_id>/delete/', views.delete_comment, name='delete_comment'),
+    ####################
 ]
 
 if settings.DEBUG:
