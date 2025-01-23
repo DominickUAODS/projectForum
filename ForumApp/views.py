@@ -301,11 +301,6 @@ def add_category(request):
             category.title = form.cleaned_data['title']
             category.description = form.cleaned_data['description']
             category.created_by = request.user
-            image = form.cleaned_data['category_image']
-            print(image)
-            print(settings.MEDIA_URL)
-            if image:
-                category.category_image = settings.MEDIA_URL + image.name
             category.save()
             return redirect('Start page')
     else:
@@ -357,7 +352,7 @@ def delete_comment(request, comment_id):
     post_id = comment.post.id
     if request.method == 'POST':
         comment.delete()
-        return redirect('post_detail', post_id=post_id)
+        return redirect('full_post', post_id=post_id)
     return render(request, 'delete_comment.html', {'comment': comment})
 
 ################### LOGIN, REGISTER(SingUp), LOGOUT, USER PROFILE ###################
@@ -410,9 +405,9 @@ def user_profile_edit(request:HttpRequest, user_id):
                 user.save()
                 return redirect('login')
             user.save()    
-            image = form.cleaned_data['user_image']
+            image = form.cleaned_data.get('user_image')
             if image:
-                user.user_image = settings.MEDIA_URL + image.name
+                user.user_image = image  
                 user.save()
             
             return redirect('user_profile_details', user_id=user.id)
@@ -457,3 +452,19 @@ def like_comment(request, comment_id):
         liked = True
     comment.save()
     return JsonResponse({'liked': liked, 'likes_count': comment.likes})
+
+
+###
+# post = Post.objects.get(id=2)
+
+# user1 = CustomUser.objects.get(id=1)
+# user2 = CustomUser.objects.get(id=2)
+
+
+# Comment.objects.create(post=post, author=user1, content="Cool post, I love it!")
+# Comment.objects.create(post=post, author=user2, content="I agree with your thoughts.")
+# Comment.objects.create(post=post, author=user1, content="This is really interesting!")
+# Comment.objects.create(post=post, author=user2, content="Well said, couldn't agree more.")
+# Comment.objects.create(post=post, author=user1, content="Amazing content, keep it up!")
+
+# print("Comments created successfully!")

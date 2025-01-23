@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block singup %}
-<div class="container d-flex justify-content-center">
+<div class="sign-cont container d-flex justify-content-center">
     <div class="row">
         <form method="post" action="">
             <h1>SingUp Page</h1>
@@ -37,8 +37,8 @@
                 <div class="">{{ form.password2 }}</div>
             </div>
             
-            <button class="btn btn-primary" type="submit">SingUp</button>
-            <a href="{% url 'login' %}">Have account? Log In</a>
+            <button class="sign-btn btn btn-primary" type="submit">SingUp</button>
+            <a class = "login-a" href="{% url 'login' %}">Have account? Log In</a>
         </form>
     </div>
 </div>

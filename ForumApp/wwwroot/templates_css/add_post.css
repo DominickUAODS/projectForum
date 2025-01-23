@@ -1,0 +1,29 @@
+.add-ps{
+    background-color: rgba(61, 132, 159, 0.8);
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 20px;
+    color: white;
+}
+
+.add-ps-b,
+.canc-ps{
+    
+    background-color:#f9f9f9 !important;
+    color: rgba(61, 132, 159, 0.8) !important;
+    font-weight: bolder !important;
+    border-radius: 20px !important;
+    border: none !important;
+}
+
+.add-ps-b:hover,
+.canc-ps:hover {
+    animation: bounce 0.5s;
+    background-color: rgb(23, 63, 116); 
+}
+
+.canc-ps{
+    background-color:rgba(61, 132, 159, 0.8) !important;
+    color:  #f9f9f9!important;
+}

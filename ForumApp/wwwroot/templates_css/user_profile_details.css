@@ -1,0 +1,35 @@
+.user-info{
+    background-color:  rgba(61, 132, 159, 0.8);
+    padding: 15px;
+    color: white;
+    border-radius: 20px;
+}
+.main-cont{
+    width: 100%!important;
+    height: auto !important;
+}
+.usr-l{
+    color: rgba(215, 232, 239, 0.8);
+}
+
+.btn-back,
+.btn-edit
+{
+    background-color:#f9f9f9 !important;
+    color: rgba(61, 132, 159, 0.8) !important;
+    font-weight: bolder !important;
+    border-radius: 20px !important;
+    border: none !important;
+}
+
+.btn-edit:hover,
+.btn-back:hover {
+    animation: bounce 0.5s;
+    background-color: rgb(23, 63, 116); 
+}
+
+.btn-back{
+    background-color:rgba(61, 132, 159, 0.8) !important;
+    color:  #f9f9f9!important;
+}
+
