@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+{% load static %}
 {% block content %}
 <div class="full-post">
 <div class="post-container">
@@ -7,9 +8,9 @@
         <h2>{{ post.category.title }}</h2>
         <div class="post-author">
             {% if post.author_picture %}
-            <img src="{{ post.author_picture }}" alt="{{ post.author.username }}" class="author-img">
+                <img src="{{ post.author_picture }}" alt="{{ post.author.username }}" class="author-img">
             {% else %}
-            <div class="author-img-placeholder"></div>
+                <img src="{% static 'img/images_png/default_user_image.png' %}" alt="User Image" class="author-img">
             {% endif %}
             <span class="author-name-full">{{ post.author.username }}</span>
         </div>

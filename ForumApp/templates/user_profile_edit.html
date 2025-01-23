@@ -1,11 +1,14 @@
 {% extends "base.html" %}
 
+{% load static %}
 {% block content %}
-<div class="container d-flex justify-content-center m-auto">
+<div class="user-cont container d-flex justify-content-center">
     <div class="row justify-content-center align-items-center">
         <div class="col-md-4">
             {% if form.instance.user_image %}
-            <img src="{{ form.instance.user_image.url }}" alt="User Image" class="img-fluid rounded" width="350">
+                <img src="{{ form.instance.user_image.url }}" alt="User Image" class="img-fluid rounded" width="350">
+            {% else %}
+                <img src="{% static 'img/images_png/default_user_image.png' %}" alt="User Image" class="img-fluid rounded" width="350">
             {% endif %}
         </div>
         <div class="edit-info col-md-8">
@@ -13,53 +16,51 @@
             <form method='post' action='' enctype="multipart/form-data">
                 {% csrf_token %}
 
-                <div class="mb-3">
+                <div class="mb-2">
                     <label for="username">Username : </label>
                     {{ form.username }}
                 </div>
 
-                <div class="mb-3">
-                    <label for="username">Email : </label>
+                <div class="mb-2">
+                    <label for="email">Email : </label>
                     {{ form.email }}
                 </div>
 
-                <div class="mb-3">
+                <div class="mb-2">
                     <label for="first_name">First name :</label>
                     {{ form.first_name }}
                 </div>
 
-                <div class="mb-3">
+                <div class="mb-2">
                     <label for="last_name">Last name :</label>
                     {{ form.last_name }}
                 </div>
 
-                <div class="mb-3">
+                <div class="mb-2">
                     <label for="date_of_bitrh">Date of birth :</label>
                     {{ form.date_of_bitrh }}
                 </div>
 
-                <div class="mb-3">
+                <div class="mb-2">
                     <label for="password">Password :</label>
                     {{ form.password }}
                 </div>
 
-                <div class="mb-3">
+                <div class="mb-2">
                     <label for="password2">Password confirmation :</label>
-                    {{ form.password }}
+                    {{ form.password2 }}
                 </div>
 
-                <div class="mb-3">
+                <div class="mb-2">
                     <label for="user_image">User image:</label>
-                   
                     {{ form.user_image }}
-                    
                 </div>
 
                 <div class="row-inline">
                     <a class="btn-back btn btn-primary" href="{% url 'Start page' %}" role="button">Back to main</a>
                     <button class="btn-edit btn btn-primary" type="submit">Save Profile</button>
                 </div>
-                <hr>
+
                 {{fields.errors}}
                 <!-- {{form.as_p}} -->
             </form>

@@ -35,11 +35,16 @@ class UserProfileForm(forms.ModelForm):
         widget=forms.PasswordInput(attrs={'type': 'password', 'class': 'form-control'}),
         required=False,
     )
+    
     class Meta:
         model = CustomUser
-        fields = ('username', 'first_name', 'last_name', 'date_of_bitrh', 'password', 'user_image', )
-        widgets = { 'date_of_bitrh': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
-                    'password': forms.PasswordInput(attrs={'type': 'password', 'class': 'form-control'}), }
+        fields = ('username', 'email', 'first_name', 'last_name', 'date_of_bitrh', 'password', 'user_image', )
+        widgets = {
+            'email': forms.EmailInput(attrs={'type': 'email', 'class': 'form-control'}),
+            'date_of_bitrh': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'password': forms.PasswordInput(attrs={'type': 'password', 'class': 'form-control'}),
+            }
+        
     def clean(self):
         cleaned_data = super().clean()
         password = cleaned_data.get("password")

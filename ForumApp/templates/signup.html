@@ -9,37 +9,52 @@
             
             <div class="mb-3">
                 <label for="username">Username</label>
-                <div class="">{{ form.username }}</div>
+                <!-- <div class="" name="username" id="id_username">{{ form.username }}</div> -->
+                <input type="text" class="form-control" name="username" id="id_username" placeholder="Enter your name" required>
             </div>
 
             <div class="mb-3">
                 <label for="email">Email</label>
-                <div class="">{{ form.email }}</div>
+                <!-- <div class="" name="email" id="id_email">{{ form.email }}</div> -->
+                <input type="email" class="form-control" name="email" id="id_email" placeholder="Enter your email" required>
             </div>
 
             <div class="mb-3">
                 <label for="first_name">First name</label>
-                <div class="">{{ form.first_name }}</div>
+                <!-- <div class="" name="first_name" id="id_first_name">{{ form.first_name }}</div> -->
+                <input type="text" class="form-control" name="first_name" id="id_first_name" placeholder="Enter your first name" required>
             </div>
 
             <div class="mb-3">
                 <label for="last_name">Last name</label>
-                <div class="">{{ form.last_name }}</div>
+                <!-- <div class="" name="last_name" >{{ form.last_name }}</div> -->
+                <input type="text" class="form-control" name="last_name" id="id_last_name" placeholder="Enter your last name" required>
             </div>
 
             <div class="mb-3">
                 <label for="date_of_bitrh">Date of birth</label>
-                <div class="">{{ form.date_of_bitrh }}</div>
+                <!-- <div class="" name="date_of_bitrh" required>{{ form.date_of_bitrh }}</div> -->
+                <input type="date" class="form-control" name="date_of_bitrh" id="id_date_of_bitrh" placeholder="Enter date of birth" required>
             </div>
 
             <div class="mb-3">
                 <label for="password1">Password</label>
-                <div class="">{{ form.password1 }}</div>
+                <!-- <div class="" name="password1" required>{{ form.password1 }}</div> -->
+                <input type="password" class="form-control" name="password1" id="id_password1" placeholder="Enter your password" required>
             </div>
 
             <div class="mb-3">
                 <label for="password2">Password confirmation</label>
-                <div class="">{{ form.password2 }}</div>
+                <!-- <div class="" name="password2" required>{{ form.password2 }}</div> -->
+                <input type="password" class="form-control" name="password2" id="id_password2" placeholder="Confirm your password" required>
+            </div>
+
+            <div class="mb-3 text-danger">
+                {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                        <label>{{ error }}</label>
+                    {% endfor %}
+                {% endif %}
             </div>
             
             <button class="sign-btn btn btn-primary" type="submit">SingUp</button>
