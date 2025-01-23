@@ -1,30 +1,45 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import *
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 
 class LoginForm(forms.Form):
-    username = forms.CharField(max_length=50)
-    password = forms.CharField(widget=forms.PasswordInput)
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'password']
+
+    username = forms.CharField()
+    password = forms.CharField()
 
 class SignUpForm(UserCreationForm):
     class Meta:
         model = CustomUser
-        fields = ('username', 'first_name', 'last_name', 'date_of_bitrh', )
-        widgets = { 'date_of_bitrh': forms.DateInput(attrs={'type': 'date', 'class': ''}), }
+        fields = ('username', 'email', 'first_name', 'last_name', 'date_of_bitrh', 'password1', 'password2', )
+        widgets = {
+            'username' : forms.TextInput(attrs={'type': 'text', 'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'type': 'email', 'class': 'form-control'}),
+            'first_name' : forms.TextInput(attrs={'type': 'text', 'class': 'form-control'}),
+            'last_name' : forms.TextInput(attrs={'type': 'text', 'class': 'form-control'}),
+            'date_of_bitrh': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            }
+        
+    def __init__(self, *args, **kwargs):
+        super(SignUpForm, self).__init__(*args, **kwargs)
+        self.fields['password1'].widget = forms.PasswordInput(attrs={'class': 'form-control'})
+        self.fields['password2'].widget = forms.PasswordInput(attrs={'class': 'form-control'})
 
 class UserProfileForm(forms.ModelForm):
     password2 = forms.CharField(
         label="Подтвердите пароль",
-        widget=forms.PasswordInput(attrs={'class': ''}),
+        widget=forms.PasswordInput(attrs={'type': 'password', 'class': 'form-control'}),
         required=False,
     )
     class Meta:
         model = CustomUser
         fields = ('username', 'first_name', 'last_name', 'date_of_bitrh', 'password', 'user_image', )
-        widgets = { 'date_of_bitrh': forms.DateInput(attrs={'type': 'date', 'class': ''}),
-                    'password': forms.PasswordInput(), }
+        widgets = { 'date_of_bitrh': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+                    'password': forms.PasswordInput(attrs={'type': 'password', 'class': 'form-control'}), }
     def clean(self):
         cleaned_data = super().clean()
         password = cleaned_data.get("password")
