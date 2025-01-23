@@ -1,0 +1,21 @@
+.log-cont{
+    background-color:  rgba(61, 132, 159, 0.8);
+    padding: 15px;
+    color: white;
+    border-radius: 20px;
+    max-width: 350px !important;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.log-a{
+    color: white !important;
+}
+
+.log-btn{
+    background-color:#f9f9f9 !important;
+    color: rgba(61, 132, 159, 0.8) !important;
+    font-weight: bolder !important;
+    border-radius: 20px !important;
+    border: none !important;
+}

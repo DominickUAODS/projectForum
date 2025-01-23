@@ -18,28 +18,30 @@ body {
 }
 .post-content {
     margin-bottom: 10px;
+
 }
-.post-likes {
+.post-likes button{
     font-size: 14px;
     color: #666;
+    border: none;
 }
 .comments-section {
+    padding-top: 20px;
     margin-top: 40px;
     background-color:   rgba(61, 132, 159, 0.8);
     color: white;
     border-radius: 20px;
-    padding-left: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
-.comment {
-    border-top: 1px solid #ddd;
-    padding: 10px 0;
-}
+
 .comment-author {
     font-weight: bold;
     color: #555;
 }
 .comment-content {
     margin: 5px 0;
+    font-weight: bolder;
 }
 .comment-likes {
     font-size: 12px;
@@ -62,12 +64,57 @@ body {
 .new-comment-form button:hover {
     background-color: #0056b3;
 }
-.author-name{
-    color: black !important;
+.author-name-full{
+    color: black ;
 }
 
 .full-post{
     display: flex;
     flex-direction: column;
     margin: 5%;
+}
+
+.comment-likes button,
+.button-delete{
+    background-color:white ;
+    opacity: 0.8;
+    color: black;
+    border:none;
+    box-shadow: none;
+    outline: none; 
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+
+
+.trash-icon{
+    width:25px;
+    height: auto;
+}
+
+
+
+.comment {
+    background-color: #f9f9f9;
+    color: #333; 
+    border-radius: 20px; 
+    margin: 10px 0; 
+    padding: 15px; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+    border: 1px solid  rgba(61, 132, 159, 0.8); 
+}
+
+.new-comment-form{
+    background-color: rgba(61, 132, 159, 0.8);
+    color: white;
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 20px;
+}
+
+.add-comment-btn{
+    background-color:#f9f9f9 !important;
+    color: rgba(61, 132, 159, 0.8) !important;
+    font-weight: bolder !important;
+    border-radius: 20px !important;
 }

@@ -8,7 +8,7 @@
             <img src="{{ form.instance.user_image.url }}" alt="User Image" class="img-fluid rounded" width="350">
             {% endif %}
         </div>
-        <div class="col-md-8">
+        <div class="edit-info col-md-8">
             <h1>User Profile Page</h1>
             <form method='post' action='' enctype="multipart/form-data">
                 {% csrf_token %}
@@ -49,13 +49,15 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="user_image">User image :</label>
+                    <label for="user_image">User image:</label>
+                   
                     {{ form.user_image }}
+                    
                 </div>
 
                 <div class="row-inline">
-                    <a class="btn btn-primary" href="{% url 'Start page' %}" role="button">Back to main</a>
-                    <button class="btn btn-primary" type="submit">Save Profile</button>
+                    <a class="btn-back btn btn-primary" href="{% url 'Start page' %}" role="button">Back to main</a>
+                    <button class="btn-edit btn btn-primary" type="submit">Save Profile</button>
                 </div>
                 <hr>
                 {{fields.errors}}

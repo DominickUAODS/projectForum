@@ -72,7 +72,7 @@
 
 .author-name {
     font-weight: bold;
-    color:rgba(215, 232, 239, 0.8);
+    color:rgba(215, 232, 239, 0.8) !important;
 }
 
 .likes,.posted-on{
